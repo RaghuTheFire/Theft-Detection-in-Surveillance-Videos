@@ -41,7 +41,7 @@ int main()
 {
     cv::VideoCapture video("Test.mp4");
     if (!video.isOpened()) 
-	{
+    {
         std::cout << "Error opening video file" << std::endl;
         return -1;
     }
@@ -55,7 +55,7 @@ int main()
     cv::Mat first_frame;
     video.read(first_frame);
     if (first_frame.empty()) 
-	{
+    {
         std::cout << "Error reading first frame" << std::endl;
         return -1;
     }
@@ -65,22 +65,22 @@ int main()
     cv::resizeWindow("Select ROI", 640, 480);
     cv::imshow("Select ROI", first_frame);
 	
-	/*********************************************************************************************
-	mouse callback function for a window named "Select ROI". 
-	The callback function is defined as a lambda function, which takes five parameters: event, x-coordinate, y-coordinate, flags, and userdata. 
-	Inside the callback function, it checks if the event is a left button down event (EVENT_LBUTTONDOWN). 
-	If it is, it casts the userdata pointer to a pointer of type cv::Rect and assigns the x and y coordinates 
-	of the rectangle to the x_ and y_ values received from the callback function. 
-	
-	The userdata parameter is a pointer to a cv::Rect object, which represents a rectangular region of interest (ROI). 
-	The cv::Rect object is created with the initial values of x, y, width, and height. 
-	In summary, when the left mouse button is clicked inside the "Select ROI" window, 
-	the x and y coordinates of the click are stored in the cv::Rect object, representing the selected region of interest.	
-	***********************************************************************************************/
+    /*********************************************************************************************
+    mouse callback function for a window named "Select ROI". 
+    The callback function is defined as a lambda function, which takes five parameters: event, x-coordinate, y-coordinate, flags, and userdata. 
+    Inside the callback function, it checks if the event is a left button down event (EVENT_LBUTTONDOWN). 
+    If it is, it casts the userdata pointer to a pointer of type cv::Rect and assigns the x and y coordinates 
+    of the rectangle to the x_ and y_ values received from the callback function. 
+		
+    The userdata parameter is a pointer to a cv::Rect object, which represents a rectangular region of interest (ROI). 
+    The cv::Rect object is created with the initial values of x, y, width, and height. 
+    In summary, when the left mouse button is clicked inside the "Select ROI" window, 
+    the x and y coordinates of the click are stored in the cv::Rect object, representing the selected region of interest.	
+    ***********************************************************************************************/
     cv::setMouseCallback("Select ROI", [](int event, int x_, int y_, int flags, void* userdata) 
-	{
+    {
         if (event == cv::EVENT_LBUTTONDOWN) 
-		{
+	{
             cv::Rect* roi = static_cast<cv::Rect*>(userdata);
             roi->x = x_;
             roi->y = y_;
@@ -101,10 +101,10 @@ int main()
 
     cv::Mat frame;
     while (true) 
-	{
+    {
         video.read(frame);
         if (frame.empty()) 
-		{
+	{
             break;
         }
 
@@ -112,7 +112,7 @@ int main()
 
         double similarity = difference(roi, roi_new);
         if (similarity < 0.8) 
-		{
+	{
             cv::rectangle(frame, roi, cv::Scalar(0, 0, 255), 2);
             Beep(500, 200);
         }
@@ -128,5 +128,3 @@ int main()
 
     return 0;
 }
-
-
